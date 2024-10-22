@@ -7,10 +7,15 @@ import java.util.List;
 
 public interface IClienteService {
     
-    public String crearCliente(Cliente cli);
+    public String saveCliente(Cliente cli);
     
-    public Cliente traerCliente(Long id_cliente);
+    public Cliente getCliente(Long id_cliente);
     
-    public List<Cliente> traerCliente();
+    public List<Cliente> getCliente();
     
+    public String deleteCliente(Long id);
+    
+    public Cliente editCliente(Long id_original,Long id_cliente, String nombre, String apellido, String dni);
+    
+    public Cliente editCliente(Cliente cli);
 }

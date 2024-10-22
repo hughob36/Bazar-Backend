@@ -14,26 +14,64 @@ public class ClienteService implements IClienteService{
     private IClienteRepository clienteRepo;
 
     @Override
-    public String crearCliente(Cliente cli) {
+    public String saveCliente(Cliente cli) {
         clienteRepo.save(cli);        
        return "Guardaste un cliente";       
     } 
 
     @Override
-    public Cliente traerCliente(Long id_cliente) {
+    public Cliente getCliente(Long id_cliente) {
         
         Cliente cli = clienteRepo.findById(id_cliente).orElse(null);
         return cli;
     }
 
     @Override
-    public List<Cliente> traerCliente() {
+    public List<Cliente> getCliente() {
       
         List<Cliente> listCliente = clienteRepo.findAll();
         return listCliente;
     }
-    
-    
-    /*Long id_cliente, String nombre, String apellido, String dni*/
+       
+    @Override
+    public String deleteCliente(Long id) {
+        
+        clienteRepo.deleteById(id);
+        return "Borraste un cliente";
+    }
+
+    @Override
+    public Cliente editCliente(Long id_original,
+                               Long id_cliente,
+                               String nombre,
+                               String apellido,
+                               String dni) {
+        
+        
+        Cliente cli = clienteRepo.findById(id_original).orElse(null);
+        
+        cli.setId_cliente(id_cliente);
+        cli.setNombre(nombre);
+        cli.setApellido(apellido);
+        cli.setDni(dni);
+        
+        clienteRepo.save(cli);
+        
+        return cli;
+        
+    }
+
+    @Override
+    public Cliente editCliente(Cliente cli) {
+        
+        Cliente nuevoCli = clienteRepo.findById(cli.getId_cliente()).orElse(null);
+        nuevoCli.setNombre(cli.getNombre());
+        nuevoCli.setApellido(cli.getApellido());
+        nuevoCli.setDni(cli.getDni());        
+        
+        clienteRepo.save(nuevoCli);
+        
+        return nuevoCli;
+    }
     
 }
